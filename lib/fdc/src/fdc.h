@@ -17,7 +17,6 @@ public:
     void INIT(bool sensor2 = false, bool sensor2_3 = false);
 
     void setupSensor(int sensorNum, FDC::Sensor sensor);
-    // FDCSensor sensor(int num);
 
     int writeFDC(byte regAddr, unsigned int regVal);
 
