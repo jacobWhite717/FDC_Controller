@@ -1,10 +1,13 @@
 #include <fdc.h>
 #include <Wire.h>
 
-FDC::FDC(bool sensor2, bool sensor2_3, int address, long refFrequency) :
+FDC::FDC(int address, long refFrequency) :
     _I2C_Addr(address),
     _fRef(refFrequency)
-{
+{   
+}
+
+void FDC::FDC_INIT(bool sensor2, bool sensor2_3) {
     writeFDC(0x08, 0xFFFF);         //RCOUNT    
     writeFDC(0x09, 0xFFFF);         //^    
     writeFDC(0x0A, 0xFFFF);         //^
@@ -31,7 +34,7 @@ FDC::FDC(bool sensor2, bool sensor2_3, int address, long refFrequency) :
     writeFDC(0x1F, 0x8C40);         //^      
     writeFDC(0x20, 0x8800);         //^      
     writeFDC(0x21, 0x8800);         //^      
-    writeFDC(0x1A, 0x1E01);         //CONFIG      
+    writeFDC(0x1A, 0x1E01);         //CONFIG   
 }
 
 void FDC::setupSensor(int sensorNum, FDC::Sensor sensor) {

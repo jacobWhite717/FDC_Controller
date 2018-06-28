@@ -12,7 +12,9 @@ public:
         double tankInd;
     };
 
-    FDC(bool sensor2 = false, bool sensor2_3 = false, int address = 0x2A, long refFrequency = 40*pow(10,6));
+    FDC(int address = 0x2A, long refFrequency = 40*pow(10,6));
+
+    void FDC_INIT(bool sensor2 = false, bool sensor2_3 = false);
 
     void setupSensor(int sensorNum, FDC::Sensor sensor);
     // FDCSensor sensor(int num);
