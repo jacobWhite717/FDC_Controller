@@ -1,16 +1,18 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include "fdc.h"
-#include "fdcsensor.h"
 
 FDC fdc;
-// FDCSensor sensor0_1(33*pow(10, -12), 18*pow(10, -6));
+FDC::Sensor sensor0_1 = {
+  3*pow(10, -12),
+  18*pow(10, -6)
+};
 
 void setup() {
   Serial.begin(9600);
   Wire.begin();
 
-  // fdc.setupSensor(0, sensor0_1);
+  fdc.setupSensor(0, sensor0_1);
   // fdc.setupSensor(1, sensor0_1);
 }
 

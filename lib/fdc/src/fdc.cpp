@@ -34,7 +34,7 @@ FDC::FDC(bool sensor2, bool sensor2_3, int address, long refFrequency) :
     writeFDC(0x1A, 0x1E01);         //CONFIG      
 }
 
-void FDC::setupSensor(int sensorNum, FDCSensor sensor) {
+void FDC::setupSensor(int sensorNum, FDC::Sensor sensor) {
     _sensors[sensorNum] = sensor;
 }
 
@@ -80,10 +80,10 @@ long FDC::sensorFreq(int sensorNum, bool MHz) {
 
 double FDC::sensorCap(int sensorNum, bool pF) {
     if(pF) {
-        return ((1 / (_sensors[sensorNum].tankInd() * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap()) * pow(10, 12);
+        return ((1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap * pow(10, 12));
     }
     else {
-        return (1 / (_sensors[sensorNum].tankInd() * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap();
+        return (1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap;
     }
 }
 

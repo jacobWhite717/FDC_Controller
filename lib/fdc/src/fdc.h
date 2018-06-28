@@ -2,14 +2,19 @@
 #define FDC_H
 
 #include <Arduino.h>
-#include "fdcsensor.h"
 
 class FDC 
 {
 public:
+
+    struct Sensor {
+        double tankCap;
+        double tankInd;
+    };
+
     FDC(bool sensor2 = false, bool sensor2_3 = false, int address = 0x2A, long refFrequency = 40*pow(10,6));
 
-    void setupSensor(int sensorNum, FDCSensor sensor);
+    void setupSensor(int sensorNum, FDC::Sensor sensor);
     // FDCSensor sensor(int num);
 
     int writeFDC(byte regAddr, unsigned int regVal);
@@ -28,7 +33,7 @@ private:    //helpers
 private:
    const int _I2C_Addr;
    const long _fRef;
-   FDCSensor _sensors[4];
+   FDC::Sensor _sensors[4];
 };
 
 #endif  // FDC_H
