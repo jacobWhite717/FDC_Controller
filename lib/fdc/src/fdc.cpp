@@ -34,7 +34,7 @@ FDC::FDC(bool sensor2, bool sensor2_3, int address, long refFrequency) :
     writeFDC(0x1A, 0x1E01);         //CONFIG      
 }
 
-void FDC::setupSensor(byte sensorNum, FDCSensor& sensor) {
+void FDC::setupSensor(int sensorNum, FDCSensor sensor) {
     _sensors[sensorNum] = sensor;
 }
 
@@ -65,11 +65,11 @@ unsigned int FDC::readFDC(byte regAddr) {
     return reading;
 }
 
-unsigned int FDC::sensorRaw(byte sensorNum) {
+unsigned int FDC::sensorRaw(int sensorNum) {
     return readFDC(fetchDataAddress(sensorNum));
 }
 
-long FDC::sensorFreq(byte sensorNum, bool MHz) {
+long FDC::sensorFreq(int sensorNum, bool MHz) {
     if(MHz) {
         return _fRef * sensorRaw(sensorNum) / pow(2, 12) / pow(10, 6);
     }
@@ -78,7 +78,7 @@ long FDC::sensorFreq(byte sensorNum, bool MHz) {
     }
 }
 
-double FDC::sensorCap(byte sensorNum, bool pF) {
+double FDC::sensorCap(int sensorNum, bool pF) {
     if(pF) {
         return ((1 / (_sensors[sensorNum].tankInd() * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap()) * pow(10, 12);
     }
@@ -87,7 +87,7 @@ double FDC::sensorCap(byte sensorNum, bool pF) {
     }
 }
 
-unsigned int FDC::fetchDataAddress(byte sensorNum) {
+unsigned int FDC::fetchDataAddress(int sensorNum) {
     if(sensorNum == 0) {
         return 0x00;
     }
