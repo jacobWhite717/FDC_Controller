@@ -41,10 +41,6 @@ void FDC::setupSensor(int sensorNum, FDC::Sensor sensor) {
     _sensors[sensorNum] = sensor;
 }
 
-// FDCSensor FDC::sensor(int num) {
-    // return _sensors[num];
-// }
-
 int FDC::writeFDC(byte regAddr, unsigned int regVal) {
     Wire.beginTransmission(_I2C_Addr);
     Wire.write(regAddr);
