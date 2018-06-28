@@ -1,13 +1,13 @@
 #include <fdc.h>
 #include <Wire.h>
 
-FDC::FDC(int address, long refFrequency) :
-    _I2C_Addr(address),
+FDC::FDC(bool ADDR_pin_H, long refFrequency) :
+    _I2C_Addr(!ADDR_pin_H ? 0x2A : 0x2B),
     _fRef(refFrequency)
 {   
 }
 
-void FDC::FDC_INIT(bool sensor2, bool sensor2_3) {
+void FDC::INIT(bool sensor2, bool sensor2_3) {
     writeFDC(0x08, 0xFFFF);         //RCOUNT    
     writeFDC(0x09, 0xFFFF);         //^    
     writeFDC(0x0A, 0xFFFF);         //^
@@ -74,34 +74,39 @@ unsigned int FDC::sensorRaw(int sensorNum) {
 
 long FDC::sensorFreq(int sensorNum, bool MHz) {
     if(MHz) {
-        return _fRef * sensorRaw(sensorNum) / pow(2, 12) / pow(10, 6);
+        return _fRef * (double)sensorRaw(sensorNum) / pow(2, 12) / pow(10, 6);
     }
     else {
-        return _fRef * sensorRaw(sensorNum) / pow(2, 12);
+        return _fRef * (double)sensorRaw(sensorNum) / pow(2, 12);
     }
 }
 
 double FDC::sensorCap(int sensorNum, bool pF) {
     if(pF) {
-        return ((1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap * pow(10, 12));
+        return ((1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) 
+            - _sensors[sensorNum].tankCap) * pow(10, 12);
     }
     else {
-        return (1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) - _sensors[sensorNum].tankCap;
+        return (1 / (_sensors[sensorNum].tankInd * pow(2 * PI * sensorFreq(sensorNum, false), 2))) 
+            - _sensors[sensorNum].tankCap;
     }
 }
 
 unsigned int FDC::fetchDataAddress(int sensorNum) {
-    if(sensorNum == 0) {
-        return 0x00;
+    switch(sensorNum) {
+        case 0:
+            return 0x00;
+            break;
+        case 1:
+            return 0x02;
+            break;
+        case 2:
+            return 0x04;
+            break;
+        case 3:
+            return 0x06;
+            break;
+        default:
+            return 0x00;
     }
-    else if(sensorNum == 1) {
-        return 0x02;
-    } 
-    else if(sensorNum == 2) {
-        return 0x04;
-    }
-    else if(sensorNum == 3) {
-        return 0x06;
-    }
-    return 0;
 }

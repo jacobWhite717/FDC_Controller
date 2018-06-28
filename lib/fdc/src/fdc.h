@@ -12,9 +12,9 @@ public:
         double tankInd;
     };
 
-    FDC(int address = 0x2A, long refFrequency = 40*pow(10,6));
+    FDC(bool ADDR_pin_H = false, long refFrequency = 40*pow(10,6));
 
-    void FDC_INIT(bool sensor2 = false, bool sensor2_3 = false);
+    void INIT(bool sensor2 = false, bool sensor2_3 = false);
 
     void setupSensor(int sensorNum, FDC::Sensor sensor);
     // FDCSensor sensor(int num);
@@ -33,9 +33,9 @@ private:    //helpers
     unsigned int fetchDataAddress(int sensorNum);
 
 private:
-   const int _I2C_Addr;
-   const long _fRef;
-   FDC::Sensor _sensors[4];
+    const int _I2C_Addr;
+    const long _fRef;
+    FDC::Sensor _sensors[4];
 };
 
 #endif  // FDC_H
