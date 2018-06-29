@@ -9,7 +9,8 @@
  *      FDC(bool ADDR_pin_H, long refFrequency)
  *          DESCRIPTION - constructor for fdc class
  *          OPTIONAL    - if ADDR_pin_H is true changes the I2C address accordingly.
- *                          refFrequency sets the refernce frequency for calculation of sensor frequency and capacitance
+ *                          refFrequency sets the refernce frequency for calculation 
+ *                          of sensor frequency and capacitance
  *
  *      INIT(bool sensor2, bool sensor2_3)
  *          DESCRIPTION - initializees
@@ -19,7 +20,8 @@
  *                           If sensor2_3 is true, sensor2 is ignored  
  *
  *      setupSensor(int sensorNum, FDC::Sensor sensor)
- *          DESCRIPTION - configures the capacitance and inductance for the sensor attached to a respective channel #
+ *          DESCRIPTION - configures the capacitance and inductance for the sensor attached 
+ *                          to a respective channel #
  *          PRE         - sensorNum MUST be between 0->3
  *          POST        - adds given sensor struct to _sensors[] field at location specified by sensorNum
  *
