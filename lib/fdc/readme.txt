@@ -3,6 +3,7 @@
  *  @author Jacob White
  *  
  *  @description    This class is to help streamline the use of Texas-Instruments FDC2114 sensor
+                    http://www.ti.com/tool/FDC2114EVM?keyMatch=fdc2114evm&tisearch=Search-EN-Everything
  *  
  *  @methods
  *
